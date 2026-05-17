@@ -1,0 +1,26 @@
+<%- include('../partials/header') %>
+
+<div class="seccion">
+  <h2>Categoría: <%= categoria %></h2>
+  <% if (productos.length === 0) { %>
+    <p style="color: #888; margin-top: 20px;">No hay productos en esta categoría.</p>
+    <a href="/" style="color: #c8973a;">Volver al inicio</a>
+  <% } else { %>
+    <div class="grilla">
+      <% for(const p of productos) { %>
+        <a href="/producto/<%= p.id %>" class="card <%= p.stock === 0 ? 'sin-stock' : '' %>">
+          <img src="/img/<%= p.id %>.jpg" alt="<%= p.nombre %>" onerror="this.onerror=null; this.src='/img/default.jpg'">
+          <div class="card-info">
+            <h3><%= p.nombre %></h3>
+            <span class="precio">$<%= p.precio.toLocaleString() %></span>
+          </div>
+          <% if (p.stock === 0) { %>
+            <span class="badge-sin-stock">Sin stock</span>
+          <% } %>
+        </a>
+      <% } %>
+    </div>
+  <% } %>
+</div>
+
+<%- include('../partials/footer') %>

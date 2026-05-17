@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Barrica</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<header>
+  <a href="/" class="logo">🥃 Barrica</a>
+  <form action="/buscar" method="GET" style="flex: 1; margin: 0 20px;">
+    <input type="text" name="query" placeholder="Buscar productos..." style="width: 100%; padding: 8px 14px; border-radius: 20px; border: none; font-size: 14px;">
+  </form>
+  <nav>
+    <a href="/carrito">🛒 (<%= locals.cartCount || 0 %>)</a>
+    <a href="/login">Ingresar</a>
+  </nav>
+</header>
+
+<div class="categorias">
+  <a href="/categorias/whisky">Whisky</a>
+  <a href="/categorias/gin">Gin</a>
+  <a href="/categorias/ron">Ron</a>
+  <a href="/categorias/vodka">Vodka</a>
+  <a href="/categorias/fernet">Fernet</a>
+</div>

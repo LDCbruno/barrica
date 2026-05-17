@@ -1,0 +1,44 @@
+<%- include('../partials/header') %>
+
+<div class="banner">
+  <h1>Bienvenido a Barrica</h1>
+  <p>Las mejores bebidas premium, directo a tu puerta</p>
+</div>
+
+<div class="seccion">
+  <h2>Te puede interesar</h2>
+  <div class="grilla">
+    <% for(const p of sugeridos) { %>
+      <a href="/producto/<%= p.id %>" class="card <%= p.stock === 0 ? 'sin-stock' : '' %>">
+        <img src="/img/<%= p.id %>.jpg" alt="<%= p.nombre %>" onerror="this.onerror=null; this.src='/img/default.jpg'">
+        <div class="card-info">
+          <h3><%= p.nombre %></h3>
+          <span class="precio">$<%= p.precio.toLocaleString() %></span>
+        </div>
+        <% if (p.stock === 0) { %>
+          <span class="badge-sin-stock">Sin stock</span>
+        <% } %>
+      </a>
+    <% } %>
+  </div>
+</div>
+
+<div class="seccion">
+  <h2>Los más pedidos</h2>
+  <div class="grilla">
+    <% for(const p of masPedidos) { %>
+      <a href="/producto/<%= p.id %>" class="card <%= p.stock === 0 ? 'sin-stock' : '' %>">
+        <img src="/img/<%= p.id %>.jpg" alt="<%= p.nombre %>" onerror="this.onerror=null; this.src='/img/default.jpg'">
+        <div class="card-info">
+          <h3><%= p.nombre %></h3>
+          <span class="precio">$<%= p.precio.toLocaleString() %></span>
+        </div>
+        <% if (p.stock === 0) { %>
+          <span class="badge-sin-stock">Sin stock</span>
+        <% } %>
+      </a>
+    <% } %>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

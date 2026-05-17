@@ -1,0 +1,42 @@
+<%- include('../partials/header') %>
+
+<div class="carrito-wrapper">
+  <h2>Tu carrito</h2>
+
+  <% if (cart.length === 0) { %>
+    <p style="color: #888; margin: 20px 0;">Tu carrito está vacío.</p>
+    <a href="/" style="color: #c8973a;">Volver al inicio</a>
+  <% } else { %>
+    <% for(const item of cart) { %>
+      <% const producto = productos.find(p => p.id === item.productId) %>
+      <% if (producto) { %>
+        <div class="carrito-item">
+          <span><%= producto.nombre %></span>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <form action="/carrito/quitar/<%= producto.id %>" method="POST" style="margin: 0;">
+              <button type="submit" style="background: #eee; border: none; padding: 4px 10px; cursor: pointer; border-radius: 4px;">➖</button>
+            </form>
+            <span><%= item.quantity %></span>
+            <form action="/carrito/agregar/<%= producto.id %>" method="POST" style="margin: 0;">
+              <button type="submit" style="background: #eee; border: none; padding: 4px 10px; cursor: pointer; border-radius: 4px;">➕</button>
+            </form>
+            <span>$<%= (producto.precio * item.quantity).toLocaleString() %></span>
+          </div>
+        </div>
+      <% } %>
+    <% } %>
+
+    <div class="carrito-total">
+      Total: $<%= total.toLocaleString() %>
+    </div>
+
+    <div style="display: flex; gap: 10px; margin-top: 20px;">
+      <form action="/carrito/vaciar" method="POST">
+        <button type="submit" style="padding: 10px 20px; background: #e74c3c; color: white; border: none; border-radius: 6px; cursor: pointer;">Vaciar carrito</button>
+      </form>
+      <a href="/checkout" style="padding: 10px 20px; background: #c8973a; color: white; border-radius: 6px; text-decoration: none;">Ir al checkout</a>
+    </div>
+  <% } %>
+</div>
+
+<%- include('../partials/footer') %>

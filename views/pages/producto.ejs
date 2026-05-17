@@ -1,0 +1,40 @@
+<%- include('../partials/header') %>
+
+<div class="detalle-wrapper">
+  <img src="/img/<%= producto.id %>.jpg" alt="<%= producto.nombre %>" onerror="this.onerror=null; this.src='/img/default.jpg'">
+  <div class="detalle-info">
+    <h1><%= producto.nombre %></h1>
+    <p class="precio">$<%= producto.precio.toLocaleString() %></p>
+    <p style="color: #666; margin-bottom: 10px; font-size: 14px;">Categoría: <%= producto.categoria %></p>
+    <p style="color: #444; margin-bottom: 20px; font-size: 14px;"><%= producto.descripcion %></p>
+    <% if (producto.stock === 0) { %>
+      <p class="badge-sin-stock">Sin stock</p>
+      <button class="btn-agregar" disabled style="opacity: 0.5; cursor: not-allowed;">Agregar al carrito</button>
+    <% } else { %>
+      <form action="/carrito/agregar/<%= producto.id %>" method="POST">
+        <button class="btn-agregar" type="submit">Agregar al carrito</button>
+      </form>
+    <% } %>
+  </div>
+</div>
+
+<div class="seccion">
+  <% if (relacionados.length > 0) { %>
+    <h2>Productos relacionados</h2>
+    <div class="grilla">
+      <% for(const p of relacionados) { %>
+        <a href="/producto/<%= p.id %>" class="card">
+          <img src="/img/<%= p.id %>.jpg" alt="<%= p.nombre %>" onerror="this.onerror=null; this.src='/img/default.jpg'">
+          <div class="card-info">
+            <h3><%= p.nombre %></h3>
+            <span class="precio">$<%= p.precio.toLocaleString() %></span>
+          </div>
+        </a>
+      <% } %>
+    </div>
+  <% } else { %>
+    <p style="color: #888;">No hay productos relacionados disponibles.</p>
+  <% } %>
+</div>
+
+<%- include('../partials/footer') %>

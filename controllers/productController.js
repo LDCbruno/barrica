@@ -26,8 +26,14 @@ function detalle(req, res) {
 function categoria(req, res) {
   try {
     const { category } = req.params;
+    const { sort } = req.query;
     const productos = productsService.getByCategoria(category);
-    res.render('pages/categoria', { productos, categoria: category });
+    const ordenados = sort === 'asc'
+      ? productos.sort((a, b) => a.precio - b.precio)
+      : sort === 'desc'
+      ? productos.sort((a, b) => b.precio - a.precio)
+      : productos;
+    res.render('pages/categoria', { productos: ordenados, categoria: category, sort });
   } catch (err) {
     res.status(500).render('pages/500');
   }
@@ -43,4 +49,14 @@ function buscar(req, res) {
   }
 }
 
-module.exports = { home, detalle, categoria, buscar };
+function productos(req, res) {
+  try {
+    const { sort } = req.query;
+    const lista = productsService.getAll(sort);
+    res.render('pages/productos', { productos: lista, sort });
+  } catch (err) {
+    res.status(500).render('pages/500');
+  }
+}
+
+module.exports = { home, detalle, categoria, buscar, productos };

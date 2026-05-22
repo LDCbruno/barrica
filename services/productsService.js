@@ -1,7 +1,10 @@
 const db = require('../db/database');
 
-function getAll() {
-  return db.prepare('SELECT * FROM products').all();
+function getAll(sort) {
+  let query = 'SELECT * FROM products';
+  if (sort === 'asc') query += ' ORDER BY precio ASC';
+  if (sort === 'desc') query += ' ORDER BY precio DESC';
+  return db.prepare(query).all();
 }
 
 function getById(id) {

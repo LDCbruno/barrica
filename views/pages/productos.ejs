@@ -1,0 +1,46 @@
+<%- include('../partials/header') %>
+
+<div class="detalle-wrapper">
+  <img src="/img/<%= producto.id %>.jpg" alt="<%= producto.nombre %>" onerror="this.onerror=null; this.src='/img/default.jpg'">
+  <div class="detalle-info">
+    <span style="background:#c8973a; color:white; font-size:12px; padding:4px 12px; border-radius:20px; text-transform:uppercase; letter-spacing:1px;"><%= producto.categoria %></span>
+    <h1 style="margin-top: 14px;"><%= producto.nombre %></h1>
+    <p class="precio">$<%= producto.precio.toLocaleString() %></p>
+    <p style="color: #555; font-size: 14px; margin-bottom: 10px;">
+      <% if (producto.stock > 0) { %>
+        ✅ En stock (<%= producto.stock %> unidades)
+      <% } else { %>
+        ❌ Sin stock
+      <% } %>
+    </p>
+    <% if (producto.stock === 0) { %>
+      <button class="btn-agregar" disabled style="opacity: 0.5; cursor: not-allowed; width: 100%;">Sin stock</button>
+    <% } else { %>
+      <form action="/carrito/agregar/<%= producto.id %>" method="POST">
+        <button class="btn-agregar" type="submit" style="width: 100%; padding: 14px; font-size: 16px;">🛒 Agregar al carrito</button>
+      </form>
+    <% } %>
+    <a href="javascript:history.back()" style="display:block; margin-top:16px; color:#888; font-size:13px; text-decoration:none;">← Volver</a>
+  </div>
+</div>
+
+<div class="seccion">
+  <% if (relacionados.length > 0) { %>
+    <h2>Productos relacionados</h2>
+    <div class="grilla">
+      <% for(const p of relacionados) { %>
+        <a href="/producto/<%= p.id %>" class="card">
+          <img src="/img/<%= p.id %>.jpg" alt="<%= p.nombre %>" onerror="this.onerror=null; this.src='/img/default.jpg'">
+          <div class="card-info">
+            <h3><%= p.nombre %></h3>
+            <span class="precio">$<%= p.precio.toLocaleString() %></span>
+          </div>
+        </a>
+      <% } %>
+    </div>
+  <% } else { %>
+    <p style="color: #888;">No hay productos relacionados disponibles.</p>
+  <% } %>
+</div>
+
+<%- include('../partials/footer') %>

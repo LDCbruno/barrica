@@ -9,9 +9,9 @@ function addProduct(req, productId) {
   const producto = db.prepare('SELECT * FROM products WHERE id = ?').get(productId);
   if (!producto) return;
   const cart = getCart(req);
-  const existing = cart.find(i => i.productId === productId);
-  if (existing) {
-    existing.quantity += 1;
+  const item = cart.find(i => i.productId === productId);
+  if (item) {
+    item.quantity += 1;
   } else {
     cart.push({ productId, quantity: 1 });
   }

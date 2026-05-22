@@ -16,8 +16,8 @@ function getDestacados(limit = 5) {
 }
 
 function getMasPedidos(limit = 10) {
-  const productos = db.prepare('SELECT * FROM products').all();
-  return productos.sort(() => Math.random() - 0.5).slice(0, limit);
+  const todos = db.prepare('SELECT * FROM products').all();
+  return todos.sort(() => Math.random() - 0.5).slice(0, limit);
 }
 
 function getByCategoria(categoria) {
@@ -25,12 +25,12 @@ function getByCategoria(categoria) {
 }
 
 function getRelacionados(id, categoria, limit = 4) {
-  const productos = db.prepare('SELECT * FROM products WHERE categoria = ? AND id != ?').all(categoria, id);
-  return productos.sort(() => Math.random() - 0.5).slice(0, limit);
+  const todos = db.prepare('SELECT * FROM products WHERE categoria = ? AND id != ?').all(categoria, id);
+  return todos.sort(() => Math.random() - 0.5).slice(0, limit);
 }
 
 function buscar(query) {
-  return db.prepare("SELECT * FROM products WHERE nombre LIKE ?").all(`%${query}%`);
+  return db.prepare('SELECT * FROM products WHERE nombre LIKE ?').all(`%${query}%`);
 }
 
 module.exports = { getAll, getById, getDestacados, getMasPedidos, getByCategoria, getRelacionados, buscar };
